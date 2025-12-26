@@ -1,0 +1,214 @@
+/* ===============================
+   SECTION – PURE BLACK
+================================ */
+.steps-section {
+  width: 100%;
+  padding: 40px 0 60px; /* ⬅ reduce bottom space */
+  background: #000000;
+}
+
+
+/* ===============================
+   STEP CARD – BASE
+================================ */
+.step-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+
+  max-width: 1550px;
+  margin: 80px auto;
+
+  /* 🔧 tuned spacing */
+  padding: 70px;
+  gap: 40px;
+
+  border-radius: 34px;
+  transition: transform 0.35s ease;
+}
+
+.step-row:hover {
+  transform: translateY(-6px);
+}
+
+/* glass border */
+.step-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+/* ===============================
+   CARD COLORS
+================================ */
+.step-1 {
+  background: linear-gradient(145deg, #140f2b, #05030f);
+  box-shadow: 0 0 70px rgba(139, 128, 255, 0.25);
+}
+
+.step-2 {
+  background: linear-gradient(145deg, #071a2e, #020d18);
+  box-shadow: 0 0 70px rgba(59, 130, 246, 0.25);
+}
+
+.step-3 {
+  background: linear-gradient(145deg, #062a2a, #021414);
+  box-shadow: 0 0 70px rgba(45, 212, 191, 0.25);
+}
+
+/* ===============================
+   IMAGE CONTAINER
+================================ */
+.step-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===============================
+   HERO IMAGE – BIG & DOMINANT
+================================ */
+.step-image img {
+  width: 100%;
+  max-width: 1040px; /* BIG but controlled */
+  height: auto;
+
+  padding: 14px;
+  background: #050505;
+  border-radius: 24px;
+
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 40px 110px rgba(0, 0, 0, 0.9);
+
+  filter: contrast(1.06) brightness(1.04);
+}
+
+/* ===============================
+   IMAGE HALOS – MATCH ALL STEPS
+================================ */
+.step-1 .step-image::after,
+.step-2 .step-image::after,
+.step-3 .step-image::after {
+  content: "";
+  position: absolute;
+  width: 90%;
+  height: 70%;
+  z-index: -1;
+  filter: blur(70px);
+}
+
+/* Step 1 – Purple */
+.step-1 .step-image::after {
+  background: radial-gradient(
+    circle,
+    rgba(139, 128, 255, 0.22),
+    transparent 70%
+  );
+}
+
+/* Step 2 – Blue */
+.step-2 .step-image::after {
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.22),
+    transparent 70%
+  );
+}
+
+/* Step 3 – Teal */
+.step-3 .step-image::after {
+  background: radial-gradient(
+    circle,
+    rgba(45, 212, 191, 0.25),
+    transparent 70%
+  );
+}
+
+/* ===============================
+   TEXT
+================================ */
+.step-text h3 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 22px;
+  color: #ffffff;
+}
+
+.step-text h3 span {
+  opacity: 0.6;
+}
+
+/* underline accent */
+.step-text h3::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin-top: 14px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #8b80ff, transparent);
+}
+
+.step-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 480px;
+  color: #d1d5db;
+  opacity: 0.9;
+}
+
+.step-link {
+  margin-top: 16px;
+  font-size: 1rem;
+}
+
+.step-link span {
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+/* ===============================
+   REVERSE (STEP 2)
+================================ */
+.step-row.reverse .step-image {
+  order: 2;
+}
+
+.step-row.reverse .step-text {
+  order: 1;
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+  .step-row {
+    grid-template-columns: 1fr;
+    padding: 50px 26px;
+    margin: 60px auto;
+  }
+
+  .step-image img {
+    max-width: 100%;
+  }
+
+  .step-text {
+    text-align: center;
+  }
+
+  .step-text p {
+    max-width: 100%;
+  }
+
+  .step-image,
+  .step-text {
+    order: unset;
+  }
+}

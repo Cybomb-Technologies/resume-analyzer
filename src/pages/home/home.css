@@ -1,0 +1,38 @@
+/* ================================
+   HOME CONTAINER
+================================ */
+.home-container {
+  width: 100%;
+  background: var(--bg-dark);
+  color: var(--text-white);
+  overflow-x: hidden;
+  padding-bottom: 50px; /* desktop spacing */
+}
+
+/* ================================
+   HOW IT WORKS (DEFAULT – DESKTOP)
+================================ */
+.howitworks-section {
+  padding: 90px 16px;
+  background: radial-gradient(circle at top, #0f0f0f, #000000);
+  color: white;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ================================
+   🔥 MOBILE FIXES (HOME PAGE ONLY)
+================================ */
+@media (max-width: 600px) {
+
+  /* Reduce bottom black space */
+  .home-container {
+    padding-bottom: 20px; /* was 50px */
+  }
+
+  /* Reduce large vertical gap in How It Works */
+  .howitworks-section {
+    padding-top: 40px;    /* was 90px */
+    padding-bottom: 50px;
+  }
+}

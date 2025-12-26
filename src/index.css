@@ -1,0 +1,64 @@
+:root {
+  /* CVScanner Light Theme */
+  --primary: #6C5CE7;
+  --primary-dark: #5A4AE0;
+  --primary-light: #A29BFE;
+
+  --bg-main: #FFFFFF;
+  --bg-light: #F8F9FB;
+  --bg-section: #F3F4F6;
+
+  --txt-main: #1F1F1F;
+  --txt-secondary: #4B5563;
+  --txt-muted: #6B7280;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+
+  --card-radius: 12px;
+  --card-shadow: 0 4px 20px rgba(0,0,0,0.05);
+
+  --bg-dark: #0E0E10;
+  --bg-dark-2: #1A1A1D;
+  
+  --text-white: #FFFFFF;
+  --text-light: #D1D5DB;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+body {
+  background: var(--bg-dark);
+  font-family: 'Inter', sans-serif;
+
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+}
+
+/* Global Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main); 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--txt-muted);
+  border-radius: 5px;
+  border: 2px solid var(--bg-main); /* Creates padding effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--txt-secondary);
+}
+
+  

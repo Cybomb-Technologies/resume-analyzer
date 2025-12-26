@@ -1,0 +1,45 @@
+.history-container {
+  padding: 3rem 5%;
+  background: var(--bg-dark);
+  min-height: 80vh;
+  color: var(--text-white);
+}
+
+.history-container h2 {
+  color: var(--primary-light);
+  margin-bottom: 2rem;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.history-card {
+  background: var(--bg-dark-2);
+  padding: 1.5rem;
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s;
+}
+
+.history-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+}
+
+.history-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.history-date {
+  color: var(--txt-muted);
+  font-size: 0.9rem;
+}
+
+.no-history {
+  color: var(--txt-muted);
+  font-size: 1.1rem;
+}

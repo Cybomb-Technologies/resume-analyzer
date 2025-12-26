@@ -1,0 +1,198 @@
+/* ================= ROOT CONTAINER ================= */
+.result-container {
+  min-height: 100vh;
+  padding: 64px 20px 80px;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(139,92,246,0.18), transparent 60%),
+    radial-gradient(800px 400px at 10% 10%, rgba(59,130,246,0.15), transparent 50%),
+    #0e0e10;
+
+  color: rgba(255,255,255,0.85);
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  line-height: 1.75;
+  letter-spacing: 0.25px;
+
+  position: relative;
+  overflow: hidden; 
+}
+/* ================= AURORA (TOP ONLY – SAFE) ================= */
+.result-container::after {
+  content: "";
+  position: absolute;
+  top: -45%;
+  left: -50%;
+  width: 200%;
+  height: 110%;
+
+  /*  FIX: prevent horizontal overflow */
+  max-width: 100vw;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(139,92,246,0.18), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(59,130,246,0.18), transparent 45%);
+
+  animation: auroraMove 22s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/*  FIX: keep animation within bounds */
+@keyframes auroraMove {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(6%, -6%, 0) rotate(180deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(360deg); }
+}
+
+/* ================= TITLE ================= */
+.result-title {
+  text-align: center;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  margin-bottom: 56px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #a78bfa, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================= SCORE SECTION ================= */
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+
+.score-card {
+  position: relative;
+  padding: 32px;
+  border-radius: 20px;
+  text-align: center;
+  backdrop-filter: blur(14px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.score-card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.score-card p {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.score-card h2 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  margin-top: 10px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.95);
+}
+
+/* ATS SCORE */
+.score-card.blue {
+  background: linear-gradient(135deg, #14b8a6, #0f766e);
+  box-shadow: 0 25px 50px rgba(20,184,166,0.35);
+}
+
+/* MATCHED SCORE */
+.score-card.purple {
+  background: linear-gradient(135deg, #6366f1, #4338ca);
+  box-shadow: 0 25px 50px rgba(99,102,241,0.35);
+}
+
+/* ================= CONTENT CARDS ================= */
+.result-card {
+  position: relative;
+  background: linear-gradient(180deg, #1c1c22, #141418);
+  padding: 28px;
+  border-radius: 20px;
+  margin: 32px auto;
+  max-width: 920px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55);
+}
+
+.result-card h3 {
+  font-weight: 700;
+  color: #a78bfa;
+  margin-bottom: 14px;
+}
+
+/* SUMMARY HIGHLIGHT */
+.highlight {
+  border-left: 5px solid #8b5cf6;
+}
+
+/* ================= GRID ================= */
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 920px;
+  margin: auto;
+}
+
+/* ================= SKILLS ================= */
+.skill-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge.success {
+  background: rgba(34,197,94,0.18);
+  color: #4ade80;
+}
+
+.badge.danger {
+  background: rgba(239,68,68,0.18);
+  color: #f87171;
+}
+
+/* ================= LIST ================= */
+.list {
+  padding-left: 18px;
+}
+
+.list li {
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .result-container {
+    padding: 48px 16px 64px;
+  }
+
+  .result-card {
+    padding: 22px;
+  }
+
+  .score-grid {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-title {
+    margin-bottom: 40px;
+  }
+
+  .score-card {
+    padding: 24px;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+  }
+}

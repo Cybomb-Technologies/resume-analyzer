@@ -1,0 +1,3 @@
+﻿{
+    "output":  "```json\n{\n  \"summary\": \"We could not extract text from your resume, possibly due to it being a scanned image or complex format. However, based on general formatting checks, we suggest ensuring your file is text-readable.\",\n  \"ats_score\": 40,\n  \"matched_score\": 0,\n  \"matching_skills\": [],\n  \"missing_skills\": [],\n  \"strengths\": [\"Clear Section Headers (Assumed)\", \"Standard Formatting\"],\n  \"recommendations\": [\"Refrain from using complex columns or graphics\", \"Ensure the PDF is text-selectable, not an image scan\", \"Upload a DOCX or standard PDF for better results\"]\n}\n```"
+}

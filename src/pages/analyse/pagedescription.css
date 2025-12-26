@@ -1,0 +1,318 @@
+/*  BLACK STARTUP BACKGROUND */
+.paste-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0f0f0f, #000000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: white;
+}
+
+/*  MAIN CARD */
+.jd-card {
+  width: 100%;
+  max-width: 1150px;
+  background: linear-gradient(145deg, #0b0b0b, #000000);
+  border-radius: 26px;
+  padding: 50px;
+  box-shadow: 0 0 45px rgba(139, 128, 255, 0.12);
+}
+
+/* ✅ HEADER WITH PROPER CENTERING + BREATHING SPACE */
+.card-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  margin-bottom: 60px;     
+  padding: 0 25px;        
+}
+
+/*  LEFT HEADING — NOW CENTERED WITH SPACE */
+.card-header .header-bold:first-child {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.4px;
+  text-align: center;      
+  margin: 0 auto 35px auto; 
+  display: block;
+}
+
+/*  RIGHT HEADING — ALSO CENTERED */
+.card-header .header-bold:last-child {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.4px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/*  BODY GRID WITH REAL GAP */
+.jd-body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 80px;    
+  row-gap: 35px;
+  margin-top: 10px;
+}
+
+/* TEXTAREA */
+.jd-textarea {
+  width: 100%;
+  height: 240px;
+  border-radius: 18px;
+  background: #090909;
+  border: 1px solid #2a2a2a;
+  padding: 20px;
+  color: white;
+  font-size: 1rem;
+  resize: none;
+}
+
+/* SAMPLE BOX — PERFECTLY CENTERED */
+.jd-sample-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     
+  justify-content: flex-start;
+  gap: 16px;
+  max-height: 280px;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 25px;       
+}
+
+/*  SAMPLE ITEM — CENTERED BUTTONS */
+.sample-item {
+  background: #1a1a1a;
+  padding: 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-weight: 600;
+  width: 100%;
+  max-width: 260px;
+  text-align: center;
+}
+
+.sample-item:hover {
+  background: #2a2a34;
+  transform: scale(1.03);
+}
+
+/*  BUTTON */
+.analyse-btn {
+  margin-top: 40px;
+  background: linear-gradient(135deg, #6b5cff, #8f6bff);
+  color: white;
+  border: none;
+  padding: 16px 42px;
+  border-radius: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 1.05rem;
+}
+
+.analyse-btn:hover {
+  opacity: 0.92;
+}
+
+/*  CENTER */
+.text-center {
+  text-align: center;
+}
+
+/*  MOBILE RESPONSIVE */
+@media (max-width: 900px) {
+  .jd-body {
+    grid-template-columns: 1fr;
+  }
+
+  .card-header {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    text-align: center;
+  }
+
+  .card-header .header-bold:first-child,
+  .card-header .header-bold:last-child {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .jd-sample-box {
+    margin-left: 0;
+  }
+}
+/* ================= LOADING OVERLAY (OPTION 3) ================= */
+
+/* Card blur when loading */
+.jd-card.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.jd-card.loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border-radius: 26px;
+  z-index: 5;
+}
+
+/* Loader container */
+.jd-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+}
+
+/* Loader box */
+.jd-loader-box {
+  background: rgba(20, 20, 30, 0.85);
+  padding: 26px 34px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(143, 107, 255, 0.45);
+}
+
+/* Spinner */
+.jd-spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid rgba(255,255,255,0.15);
+  border-top: 4px solid #8f6bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 14px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Loader text */
+.jd-loader-text {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #e6e6ff;
+}
+
+/* ================= BUTTON LOADING STATE ================= */
+
+.analyse-btn.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+/* Small spinner inside button */
+.btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+/* =========================================
+   RESUME ONLY – CLEAN & CORRECT ALIGNMENT
+   (ADD-ON ONLY, SAFE)
+========================================= */
+
+/* Wrapper: controls symmetry */
+.resume-only-content {
+  max-width: 700px;
+  margin: 20px auto 40px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* Space below title */
+.card-header .header-bold {
+  display: block;
+  margin-bottom: 24px;
+}
+
+/* Description spacing */
+.resume-only-desc {
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+/* Checklist container */
+.resume-only-points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+/* Checklist item */
+.resume-only-points div {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;      
+  line-height: 1.5;
+}
+/* =========================================
+   RESUME ONLY – FIX UNEQUAL SIDE SPACING
+   (FINAL, REQUIRED FIX)
+========================================= */
+
+/* When Resume Only content exists → remove 2-column grid */
+.jd-body:has(.resume-only-content) {
+  grid-template-columns: 1fr;      
+  justify-items: center;           
+}
+/* Center the resume-only block properly */
+.jd-body:has(.resume-only-content) .resume-only-content {
+  max-width: 720px;               
+  width: 100%;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* Checklist block centered as a unit */
+.jd-body:has(.resume-only-content) .resume-only-points {
+  align-items: center;
+}
+
+/* Each checklist line visually centered */
+.jd-body:has(.resume-only-content) .resume-only-points div {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* =========================================
+   RESUME ONLY – CENTER TITLE FIX
+   (FINAL MISSING PIECE)
+========================================= */
+
+/* Collapse header grid ONLY in Resume Only mode */
+.jd-body:has(.resume-only-content) ~ .card-header,
+.jd-card:has(.resume-only-content) .card-header {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+}
+
+/* Ensure title itself is centered */
+.jd-card:has(.resume-only-content) .card-header .header-bold {
+  margin: 0 auto 24px;
+  text-align: center;
+}

@@ -1,0 +1,26 @@
+:root {
+  /* Primary Colors */
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-darker: #4338ca;
+  
+  /* Background Colors */
+  --bg-dark: #0f172a;
+  --bg-dark-light: #1e293b;
+  --bg-light: #f8fafc;
+  --bg-lighter: #f1f5f9;
+  
+  /* Text Colors */
+  --text-dark: #0f172a;
+  --text-gray: #475569;
+  --text-lightgray: #cbd5e1;
+  --text-white: #ffffff;
+  
+  /* Border + Shadow */
+  --border-gray: #e2e8f0;
+  --shadow-purple: rgba(99, 102, 241, 0.35);
+  --shadow-soft: rgba(0,0,0,0.15);
+}
+html, body {
+  overflow-x: hidden;
+}

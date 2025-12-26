@@ -1,0 +1,142 @@
+
+/* MAIN SECTION */
+.howitworks-section {
+  padding: 35px 16px 90px;
+  background: radial-gradient(circle at top, #0f0f0f, #000000);
+  color: white;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
+.howitworks-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* TITLE */
+.howitworks-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 50px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* FLEX ROW — MOBILE SAFE */
+.howitworks-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+}
+
+/* CARD */
+.howitworks-card {
+  background: linear-gradient(145deg, #0b0b0b, #000000);
+  border-radius: 20px;
+  padding: 32px 22px;
+  box-shadow: 0 0 18px rgba(139, 128, 255, 0.15);
+  text-align: center;
+  transition: 0.25s ease;
+
+  width: 100%;
+  max-width: 340px;    
+  min-height: 240px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.howitworks-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 35px rgba(139, 128, 255, 0.25);
+}
+
+/* ICON */
+.howitworks-icon {
+  font-size: 2.6rem;
+  color: #8b80ff;
+  margin-bottom: 14px;
+}
+
+/*  CARD TITLE */
+.howitworks-card h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/*  CARD TEXT */
+.howitworks-card p {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  line-height: 1.55;
+}
+
+
+@media (max-width: 992px) {
+  .howitworks-title {
+    font-size: 2rem;
+  }
+
+  .howitworks-card {
+    max-width: 320px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .howitworks-title {
+    font-size: 1.6rem;
+    margin-bottom: 32px;
+  }
+
+  .howitworks-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .howitworks-card {
+    max-width: 100%;
+    width: 100%;
+    min-height: auto;
+    padding: 26px 20px;
+  }
+
+  .howitworks-icon {
+    font-size: 2.3rem;
+  }
+
+  .howitworks-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .howitworks-card p {
+    font-size: 0.93rem;
+  }
+
+.howitworks-section,
+.howitworks-wrapper,
+.howitworks-row,
+.howitworks-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+.howitworks-row {
+  display: flex !important;
+  flex-direction: column !important;  
+  align-items: center !important;
+}
+
+.howitworks-card {
+  margin-bottom: 20px !important;
+}
+}
