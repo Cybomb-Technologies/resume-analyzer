@@ -33,7 +33,7 @@ export default function AppNavbar() {
             <span className="nav-link dropdown-trigger">Services <i className="bi bi-chevron-down"></i></span>
             {dropdownOpen && (
               <div className="nav-dropdown-menu text-white">
-                <Link to="/analyse" className="dropdown-item">Analyse</Link>
+                <Link to="/analyse" className="dropdown-item">Resume Analyzer</Link>
                 <Link to="/cover-letter" className="dropdown-item">Cover Letter</Link>
                 <Link to="/mock-interview" className="dropdown-item">Mock Interview</Link>
                 <Link to="/job-matching" className="dropdown-item">Job Matching</Link>
