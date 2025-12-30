@@ -10,8 +10,6 @@ export default function PageDescription() {
   //  READ MODE
   const mode = localStorage.getItem("analysis_mode") || "JD_BASED";
 
-  //  ENV-SAFE API URL
-  const API_URL = import.meta.env.VITE_API_URL;
 
   async function sendJDToN8N() {
     const resumeText = localStorage.getItem("resume_text");
@@ -30,7 +28,7 @@ export default function PageDescription() {
 
     try {
      const response = await fetch(
-  `${API_URL}/webhook/Resume-Analyzer`,
+  `${import.meta.env.VITE_API_URL || ''}/api/ai/analyze-resume`,
   {
     method: "POST",
     headers: { "Content-Type": "application/json" },

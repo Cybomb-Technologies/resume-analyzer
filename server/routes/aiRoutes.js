@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { generateCoverLetter, generateInterviewQuestions } = require('../controllers/aiController');
+const aiController = require('../controllers/aiController');
 
-router.post('/cover-letter', generateCoverLetter);
-router.post('/interview-questions', generateInterviewQuestions);
-router.post('/evaluate-answer', require('../controllers/aiController').evaluateAnswer);
+router.post('/cover-letter', aiController.generateCoverLetter);
+router.post('/interview-questions', aiController.generateInterviewQuestions);
+router.post('/evaluate-answer', aiController.evaluateAnswer);
+router.post('/analyze-resume', aiController.analyzeResume);
+router.post('/job-match', aiController.matchJobs);
 
 module.exports = router;

@@ -23,7 +23,7 @@ const JobMatching = () => {
 
     try {
       const response = await axios.post(
-        "https://n8n.cybomb.com/webhook/job-match",
+        `${import.meta.env.VITE_API_URL || ''}/api/ai/job-match`,
         {
           resumeText,
           location,

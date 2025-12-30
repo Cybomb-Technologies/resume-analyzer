@@ -218,4 +218,60 @@ const evaluateAnswer = async (req, res) => {
     }
 };
 
-module.exports = { generateCoverLetter, generateInterviewQuestions, evaluateAnswer };
+// @desc    Analyze Resume via n8n
+// @route   POST /api/ai/analyze-resume
+const analyzeResume = async (req, res) => {
+    const { mode, resume_text, job_description } = req.body;
+    
+    const n8nUrl = process.env.N8N_RESUME_ANALYZER_WEBHOOK;
+
+    if (!n8nUrl) {
+         return res.status(500).json({ message: 'N8N Resume Analyzer Webhook not configured' });
+    }
+
+    try {
+        const response = await axios.post(n8nUrl, {
+            mode,
+            resume_text,
+            text: resume_text,
+            content: resume_text,
+            job_description: mode === "JD_BASED" ? job_description : null,
+        });
+        
+        // n8n returns the analysis results
+        const output = response.data.output || response.data.json || response.data;
+        res.json(output);
+    } catch (error) {
+         console.error("n8n Error:", error.message);
+         res.status(500).json({ message: 'Error communicating with AI service' });
+    }
+};
+
+// @desc    Match Jobs via n8n
+// @route   POST /api/ai/job-match
+const matchJobs = async (req, res) => {
+    const { resumeText, location, jobType } = req.body;
+    
+    const n8nUrl = process.env.N8N_JOB_MATCH_WEBHOOK;
+
+    if (!n8nUrl) {
+         return res.status(500).json({ message: 'N8N Job Match Webhook not configured' });
+    }
+
+    try {
+        const response = await axios.post(n8nUrl, {
+            resumeText,
+            location,
+            jobType
+        });
+        
+        // n8n returns the matched jobs
+        const output = response.data.output || response.data.json || response.data;
+        res.json(output);
+    } catch (error) {
+         console.error("n8n Error:", error.message);
+         res.status(500).json({ message: 'Error communicating with AI service' });
+    }
+};
+
+module.exports = { generateCoverLetter, generateInterviewQuestions, evaluateAnswer, analyzeResume, matchJobs };

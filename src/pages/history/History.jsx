@@ -12,7 +12,7 @@ export default function History() {
       if (!token) return;
 
       try {
-        const res = await fetch('http://localhost:5000/api/history', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/history`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

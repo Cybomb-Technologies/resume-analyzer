@@ -21,7 +21,7 @@ export default function CoverLetter() {
     const resumeText = localStorage.getItem('resume_text');
 
     try {
-      const res = await fetch(`/api/ai/cover-letter?t=${Date.now()}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai/cover-letter?t=${Date.now()}`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

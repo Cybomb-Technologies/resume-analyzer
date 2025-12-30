@@ -28,7 +28,7 @@ export default function MockInterview() {
     const resumeText = localStorage.getItem('resume_text') || "";
 
     try {
-      const res = await fetch(`/api/ai/interview-questions?t=${Date.now()}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai/interview-questions?t=${Date.now()}`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export default function MockInterview() {
 
     try {
       const resumeText = localStorage.getItem('resume_text');
-      const res = await fetch(`/api/ai/evaluate-answer?t=${Date.now()}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai/evaluate-answer?t=${Date.now()}`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

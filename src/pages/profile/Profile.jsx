@@ -34,7 +34,7 @@ export default function Profile() {
         if (!token) return;
 
         try {
-            const res = await fetch('http://localhost:5000/api/history', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/history`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -54,7 +54,7 @@ export default function Profile() {
     const token = user.token || JSON.parse(localStorage.getItem('userInfo')).token;
     
     try {
-      const res = await fetch('http://localhost:5000/api/user/profile', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/user/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
