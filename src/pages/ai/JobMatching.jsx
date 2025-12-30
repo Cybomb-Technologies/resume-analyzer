@@ -26,7 +26,40 @@ const JobMatching = () => {
         }
       );
 
-      setResults(response.data.matchedJobs);
+      // Extract results from n8n's nested structure with robust fallback logic
+      const rawData = response.data;
+      console.log("Job Matching Response Debug:", rawData);
+
+      let extractedJobs = null;
+
+      // Helper to extract jobs from various possible structures
+      const getJobs = (obj) => {
+        if (!obj) return null;
+        if (Array.isArray(obj.results)) return obj.results;
+        if (Array.isArray(obj.matchedJobs)) return obj.matchedJobs;
+        if (Array.isArray(obj.jobs)) return obj.jobs;
+        return null;
+      };
+
+      if (Array.isArray(rawData)) {
+        // Option 1: Results are in the first item of the array (N8N default)
+        extractedJobs = getJobs(rawData[0]);
+        
+        // Option 2: The array itself is the list of jobs
+        if (!extractedJobs && rawData.length > 0 && (rawData[0].job_title || rawData[0].title)) {
+          extractedJobs = rawData;
+        }
+      } else {
+        // Option 3: Results are in the top-level object
+        extractedJobs = getJobs(rawData);
+      }
+
+      if (extractedJobs && Array.isArray(extractedJobs)) {
+        setResults(extractedJobs);
+      } else {
+        console.error("Failed to parse jobs from:", rawData);
+        setError("Unexpected response format from AI service. Please check console for details.");
+      }
     } catch (err) {
       setError("Failed to fetch job matches. Please try again.");
     } finally {
@@ -34,91 +67,125 @@ const JobMatching = () => {
     }
   };
 
-  return (
-    <div className={`container ${styles.wrapper}`}>
-      <h2 className="text-center mb-4">AI Job Matching</h2>
+  const getScoreClass = (score) => {
+    if (score >= 80) return styles.scoreHigh;
+    if (score >= 60) return styles.scoreMedium;
+    return styles.scoreLow;
+  };
 
-      <form onSubmit={handleSubmit} className={styles.card}>
-        <div className="mb-3">
-          <label className="form-label">Paste Your Resume</label>
+  return (
+    <div className={styles.wrapper}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>AI Job Matching</h1>
+        <p className={styles.subtitle}>Discover prime opportunities tailored to your unique expertise</p>
+      </header>
+
+      <form onSubmit={handleSubmit} className={styles.glassCard}>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Professional Resume</label>
           <textarea
-            className="form-control"
+            className={styles.textarea}
             rows="6"
-            placeholder="Paste your resume content here..."
+            placeholder="Paste your professional summary or full resume content..."
             value={resumeText}
             onChange={(e) => setResumeText(e.target.value)}
             required
           />
         </div>
 
-        <div className="row">
-          <div className="col-md-6 mb-3">
-            <label className="form-label">Preferred Location</label>
+        <div className={styles.row}>
+          <div className={styles.col}>
+            <label className={styles.label}>Preferred Location</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="India / Remote"
+              className={styles.input}
+              placeholder="e.g. Remote, Bangalore, New York"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
           </div>
 
-          <div className="col-md-6 mb-3">
-            <label className="form-label">Job Role</label>
+          <div className={styles.col}>
+            <label className={styles.label}>Target Job Role</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Frontend Developer"
+              className={styles.input}
+              placeholder="e.g. Senior Backend Engineer"
               value={jobType}
               onChange={(e) => setJobType(e.target.value)}
             />
           </div>
         </div>
 
-        <button className="btn btn-primary w-100" disabled={loading}>
-          {loading ? "Matching Jobs..." : "Find Matching Jobs"}
+        <button className={styles.submitBtn} disabled={loading}>
+          {loading ? (
+            <span className={styles.loader}>Searching Market...</span>
+          ) : (
+            "Scan for Opportunities"
+          )}
         </button>
       </form>
 
-      {/* Results */}
-      <div className="mt-5">
-        {loading && <p className="text-center">Analyzing your profile...</p>}
+      {/* Results Section */}
+      <div className={styles.resultsContainer}>
+        {loading && (
+          <div className={styles.loadingState}>
+            <div className={styles.spinner}></div>
+            <p>Our AI is analyzing thousands of job markers for you...</p>
+          </div>
+        )}
 
-        {error && <p className="text-danger text-center">{error}</p>}
+        {error && (
+          <div className={styles.errorState}>
+            <i className="bi bi-exclamation-triangle"></i>
+            <p>{error}</p>
+          </div>
+        )}
 
         {results.length > 0 && (
-          <>
-            <h4 className="mb-3">Matched Jobs</h4>
-            <div className="row">
+          <div className={styles.resultsGrid}>
+            <h2 className={styles.resultsTitle}>Optimal Career Matches</h2>
+            <div className={styles.grid}>
               {results.map((job, index) => (
-                <div className="col-md-6 mb-4" key={index}>
-                  <div className={styles.jobCard}>
-                    <h5>{job.title}</h5>
-                    <p className="text-muted">{job.company}</p>
-
-                    <div className={styles.score}>
-                      Match Score: <strong>{job.matchScore}%</strong>
+                <div className={styles.jobGlassCard} key={job.job_id || index}>
+                  <div className={styles.jobHeader}>
+                    <div>
+                      <h3 className={styles.jobTitle}>{job.job_title}</h3>
+                      <p className={styles.companyName}>{job.company}</p>
                     </div>
-
-                    <p className="small">{job.reason}</p>
-
-                    <p className="text-warning small">
-                      Missing Skills: {job.missingSkills?.join(", ") || "None"}
-                    </p>
-
-                    <a
-                      href={job.applyLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn btn-outline-primary btn-sm mt-2"
-                    >
-                      Apply Now
-                    </a>
+                    <div className={`${styles.scoreBadge} ${getScoreClass(job.match_score)}`}>
+                      {job.match_score}% Match
+                    </div>
                   </div>
+
+                  <div className={styles.analysisBox}>
+                    <h4 className={styles.sectionLabel}>AI Insights</h4>
+                    <p className={styles.explanation}>{job.explanation}</p>
+                  </div>
+
+                  {job.missing_skills && job.missing_skills.length > 0 && (
+                    <div className={styles.skillsBox}>
+                      <h4 className={styles.sectionLabel}>Growth Areas</h4>
+                      <div className={styles.skillsList}>
+                        {job.missing_skills.map((skill, i) => (
+                          <span key={i} className={styles.skillTag}>{skill}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <a
+                    href={job.redirect_url || job.applyLink || "#"}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.applyBtn}
+                  >
+                    View Opportunity <i className="bi bi-arrow-right"></i>
+                  </a>
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
