@@ -1,0 +1,169 @@
+/* AI.module.css */
+
+/* Main Container Background */
+.pageContainer {
+  background: radial-gradient(ellipse at top right, #1e1b4b 0%, #000000 40%, #0f172a 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.pageContainer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+  z-index: 0;
+  animation: pulse 15s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Glassmorphism Card */
+.glassCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 100px rgba(99, 102, 241, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 20px; /* Bootstrap doesn't always have large radius */
+  overflow: hidden; 
+}
+
+/* Header */
+.header {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(99, 102, 241, 0.05) 50%, rgba(0, 0, 0, 0.2) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.titleGradient {
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 50%, #6366f1 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Inputs & Outputs */
+.inputField, .outputField {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff !important;
+  resize: none;
+  transition: all 0.3s;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.inputField:focus, .outputField:focus {
+  outline: none;
+  border-color: rgba(99, 102, 241, 0.5);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.inputField {
+  min-height: 380px;
+}
+
+.outputField {
+  min-height: 580px;
+}
+
+/* Buttons */
+.gradientBtn {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #6366f1 100%);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+}
+
+.gradientBtn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  background-position: 100% 50%;
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+  color: white;
+}
+
+.gradientBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.actionBtn {
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(255, 255, 255);
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.actionBtn:hover {
+  background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #6366f1 100%) !important;
+  color: #ffffff !important;
+}
+
+/* Helper Elements */
+.statusDot {
+  width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+}
+
+/* Loading Dots */
+.loadingDots::after {
+  content: "";
+  animation: dots 1.5s infinite;
+  display: inline-block;
+  width: 1em;
+  text-align: left;
+}
+
+@keyframes dots {
+  0%, 20% { content: "."; }
+  40% { content: ".."; }
+  60%, 100% { content: "..."; }
+}
+
+/* Mock Interview Specifics */
+.questionItem {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.questionItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.questionNumber {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+}

@@ -2,22 +2,33 @@ import React from "react";
 
 import Banner from "./banner";
 import Feature from "./feature";
-import HowItWorks from "../../components/howitworks";   // ✅ KEEP THIS ONE
-import StepsShowcase from "../../components/stepshowcase";
+import Stats from "./Stats";
+import Testimonials from "./Testimonials";
+import CTA from "./CTA";
+import FAQ from "./FAQ";
+
 import "./home.css";
 
 export default function Home() {
   return (
     <div className="home-container">
+      {/* 1. Banner */}
       <Banner />
+
+      {/* 2. Services Providing */}
       <Feature />
 
-      {/*  ONLY ONE HOW IT WORKS */}
-      <HowItWorks />
+      {/* 3. General - Data about tool and usage */}
+      <Stats />
 
-      <StepsShowcase />
+      {/* 4. Testimonials */}
+      <Testimonials />
 
-      {/*  REMOVED SCREENING COMPLETELY */}
+      {/* 5. CTA */}
+      <CTA />
+
+      {/* 6. FAQ */}
+      <FAQ />
     </div>
   );
 }

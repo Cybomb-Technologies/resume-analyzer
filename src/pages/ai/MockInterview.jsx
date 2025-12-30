@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
-import './ai.css';
+import styles from './AI.module.css';
 
 export default function MockInterview() {
   const [jobDesc, setJobDesc] = useState('');
@@ -28,9 +28,14 @@ export default function MockInterview() {
     const resumeText = localStorage.getItem('resume_text') || "";
 
     try {
-      const res = await fetch('/api/ai/interview-questions', {
+      const res = await fetch(`/api/ai/interview-questions?t=${Date.now()}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
         body: JSON.stringify({ jobDescription: jobDesc, resumeText })
       });
 
@@ -73,9 +78,14 @@ export default function MockInterview() {
 
     try {
       const resumeText = localStorage.getItem('resume_text');
-      const res = await fetch('/api/ai/evaluate-answer', {
+      const res = await fetch(`/api/ai/evaluate-answer?t=${Date.now()}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
         body: JSON.stringify({ 
           question: questionText, 
           userAnswer: answer,
@@ -94,205 +104,177 @@ export default function MockInterview() {
   };
 
   return (
-    <div className="ai-container single-column">
-      <div className="ai-card">
+    <div className={`container-fluid py-4 ${styles.pageContainer}`}>
+      <div className="container-fluid px-3 h-100">
+        <div className={`${styles.glassCard} d-flex flex-column`} style={{minHeight: '85vh'}}>
         
-        {/* Header */}
-        <div className="ai-header">
-          <h2>AI Mock Interviewer</h2>
-          <p>Prepare for your interview with tailored questions based on the job description.</p>
-        </div>
+          {/* Header */}
+          <div className={`p-4 p-md-5 ${styles.header}`}>
+            <h2 className={`fw-bold mb-2 ${styles.titleGradient}`}>AI Mock Interviewer</h2>
+            <p className="text-white-50 fs-5 mb-0">Prepare for your interview with tailored questions based on the job description.</p>
+          </div>
 
-        {/* Input Section (Moved to Top) */}
-        <div className="ai-input-section py-3 px-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '2rem', marginBottom: '2rem' }}>
-            <div className="ai-input-wrapper horizontal">
-                <label className="ai-label">
-                    Job Description
-                    <span className="status-indicator">
-                      <span style={{width: '8px', height: '8px', background: charCount > 0 ? '#10b981' : '#94a3b8', borderRadius: '50%', display: 'inline-block'}}></span>
-                      {charCount > 0 ? 'Ready to generate' : 'Awaiting input'}
+          <div className="flex-grow-1 d-flex flex-column">
+            {/* Input Section */}
+            <div className="p-4 p-md-5 border-bottom border-secondary border-opacity-25">
+                <div className="mb-3 d-flex justify-content-between align-items-center">
+                    <label className="text-white fw-bold">Job Description</label>
+                    <span className="badge bg-opacity-10 bg-white border border-white-10 text-light fw-normal d-flex align-items-center gap-2">
+                       <span className={styles.statusDot} style={{background: charCount > 0 ? '#10b981' : '#94a3b8'}}></span>
+                       {charCount > 0 ? 'Ready' : 'Awaiting Input'}
                     </span>
-                </label>
+                </div>
+                
                 <textarea 
-                  className="ai-input full-width" 
-                  placeholder="Paste the job description here...\n\nExample:\nLooking for a Junior Python Developer with knowledge of Django, Flask, and basic database concepts...\n\nRequirements:\n• 1-2 years Python experience\n• Understanding of REST APIs\n• Familiar with version control (Git)"
+                  className={`form-control mb-3 ${styles.inputField}`} 
+                  style={{minHeight: '200px'}}
+                  placeholder="Paste the job description here...\n\nExample:\nlooking for a Junior Python Developer..."
                   value={jobDesc}
                   onChange={(e) => setJobDesc(e.target.value)}
                   maxLength={3000}
                 />
-                <div className="char-counter text-white">
-                  {charCount}/3000 characters
+                
+                <div className="d-flex justify-content-between align-items-center">
+                    <div className="text-white-50 small">
+                        {charCount}/3000 characters
+                    </div>
+                    <button 
+                        className={`btn btn-lg px-4 fw-bold ${styles.gradientBtn}`} 
+                        onClick={handleGenerate} 
+                        disabled={loading || !jobDesc.trim()}
+                    >
+                        {loading ? (
+                          <>
+                            <span className={`me-2 ${styles.loadingDots}`}></span>
+                            Generating
+                          </>
+                        ) : (
+                          'Generate Interview Questions'
+                        )}
+                    </button>
                 </div>
             </div>
-            <div className="ai-actions right-align">
-                <button 
-                    className="ai-btn" 
-                    onClick={handleGenerate} 
-                    disabled={loading || !jobDesc.trim()}
-                >
-                    {loading ? (
-                      <>
-                        <span className="loading-dots"></span>
-                        Generating Questions
-                      </>
-                    ) : (
-                      <>
-                        Generate Interview Questions
-                      </>
-                    )}
-                </button>
-            </div>
-        </div>
 
-        {/* Output Section (Moved to Bottom) */}
-        <div className="ai-output-section" ref={resultsRef}>
-            {questions.length > 0 ? (
-                <div className="ai-output-wrapper">
-                    <div className="ai-label">
-                        <div>
-                          <strong>Interview Questions</strong>
-                          <div style={{fontSize: '0.85rem', opacity: 0.7, marginTop: '0.25rem'}}>
-                            {questions.length} Questions • Write answers to get AI feedback
-                          </div>
-                        </div>
-                        <button 
-                          className="copy-btn"
-                          onClick={() => {
-                            const allQuestions = questions.map((q, i) => 
-                              `Q${i+1}: ${q.question}`
-                            ).join('\n');
-                            navigator.clipboard.writeText(allQuestions);
-                            alert('Questions copied to clipboard!');
-                          }}
-                        >
-                          📋 Copy All
-                        </button>
-                    </div>
-                    
-                    <div className="questions-list">
-                        {questions.map((q, i) => (
-                          <div key={i} className="question-item">
-                            <div style={{display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem'}}>
-                              <div style={{
-                                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                                color: 'white',
-                                width: '32px',
-                                height: '32px',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: 'bold',
-                                flexShrink: 0,
-                                fontSize: '0.9rem'
-                              }}>
-                                {i+1}
+            {/* Output Section */}
+            <div className="p-4 p-md-5" ref={resultsRef}>
+                {questions.length > 0 ? (
+                    <div>
+                        <div className="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                              <strong className="text-white fs-5">Interview Questions</strong>
+                              <div className="text-white-50 small">
+                                {questions.length} Questions • Write answers to get AI feedback
                               </div>
-                              <div style={{flex: 1}}>
-                                <p style={{
-                                  marginBottom: '1rem', 
-                                  lineHeight: '1.6',
-                                  fontSize: '1.05rem',
-                                  color: 'rgba(255, 255, 255, 0.95)'
-                                }}>
-                                  <strong style={{color: 'rgba(255, 255, 255, 0.9)'}}>Question:</strong> {q.question}
-                                </p>
+                            </div>
+                            <button 
+                              className={`btn btn-sm ${styles.actionBtn}`}
+                              onClick={() => {
+                                const allQuestions = questions.map((q, i) => 
+                                  `Q${i+1}: ${q.question}`
+                                ).join('\n');
+                                navigator.clipboard.writeText(allQuestions);
+                                alert('Questions copied to clipboard!');
+                              }}
+                            >
+                              <i className="bi bi-clipboard me-2"></i> Copy All
+                            </button>
+                        </div>
+                        
+                        <div className="d-flex flex-column gap-4">
+                            {questions.map((q, i) => (
+                              <div key={i} className={`p-4 text-white rounded-3 ${styles.questionItem}`} style={{background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)'}}>
+                                <div className="d-flex gap-3 mb-3">
+                                  <div className={`flex-shrink-0 ${styles.questionNumber}`}>
+                                    {i+1}
+                                  </div>
+                                  <div className="flex-grow-1">
+                                    <p className="fs-5 mb-0" style={{lineHeight: '1.6'}}>
+                                      <strong className="d-block text-white-50 small mb-1">Question</strong>
+                                      {q.question}
+                                    </p>
+                                  </div>
+                                </div>
                                 
                                 {answerMode[i] && (
-                                  <div className="answer-section">
-                                    <textarea
-                                      className="user-answer-input"
-                                      placeholder="Type your answer here to get AI feedback..."
-                                      value={userAnswers[i] || ''}
-                                      onChange={(e) => handleAnswerChange(i, e.target.value)}
-                                    />
-                                    <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem'}}>
-                                      <button 
-                                        className="web-app-button"
-                                        onClick={() => submitAnswer(i, q.question)}
-                                        disabled={evaluating[i] || !userAnswers[i]?.trim()}
-                                        style={{padding: '0.5rem 1rem', fontSize: '0.9rem'}}
-                                      >
-                                        {evaluating[i] ? 'Evaluating...' : 'Submit for Feedback'}
-                                      </button>
-                                    </div>
+                                  <div className="mt-3 ps-lg-5">
+                                    <div className="p-3 rounded-3" style={{background: 'rgba(0,0,0,0.2)'}}>
+                                        <textarea
+                                          className={`form-control mb-3 bg-transparent text-white border-secondary border-opacity-50`}
+                                          style={{ color: '#fff' }}
+                                          placeholder="Type your answer here to get AI feedback..."
+                                          value={userAnswers[i] || ''}
+                                          onChange={(e) => handleAnswerChange(i, e.target.value)}
+                                          rows={4}
+                                        />
+                                        <div className="d-flex justify-content-end">
+                                          <button 
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() => submitAnswer(i, q.question)}
+                                            disabled={evaluating[i] || !userAnswers[i]?.trim()}
+                                          >
+                                            {evaluating[i] ? 'Evaluating...' : 'Submit for Feedback'}
+                                          </button>
+                                        </div>
 
-                                    {evaluations[i] && (
-                                      <div className="evaluation-result">
-                                        <div className="evaluation-header">
-                                          <span className="eval-rating">
-                                            Rating: {evaluations[i].rating || 'N/A'}
-                                          </span>
-                                        </div>
-                                        <div className="eval-content">
-                                          {evaluations[i].feedback && (
-                                            <div style={{marginBottom: '0.8rem'}}>
-                                              <strong>Feedback:</strong>
-                                              <ReactMarkdown className="markdown-content">
-                                                {evaluations[i].feedback}
-                                              </ReactMarkdown>
+                                        {evaluations[i] && (
+                                          <div className="mt-3 p-3 rounded border border-success border-opacity-25 bg-success bg-opacity-10">
+                                            <div className="d-flex justify-content-between mb-2">
+                                              <span className="fw-bold text-success">
+                                                Rating: {evaluations[i].rating || 'N/A'}
+                                              </span>
                                             </div>
-                                          )}
-                                          {evaluations[i].suggestion && (
-                                            <div style={{marginBottom: '0.8rem'}}>
-                                              <strong>Suggestion:</strong>
-                                              <ReactMarkdown className="markdown-content">
-                                                {evaluations[i].suggestion}
-                                              </ReactMarkdown>
+                                            <div className="small text-white">
+                                              {evaluations[i].feedback && (
+                                                <div className="mb-2">
+                                                  <strong className="text-success text-uppercase small d-block">Feedback</strong>
+                                                  <ReactMarkdown>{evaluations[i].feedback}</ReactMarkdown>
+                                                </div>
+                                              )}
+                                              {evaluations[i].suggestion && (
+                                                <div className="mb-2">
+                                                  <strong className="text-success text-uppercase small d-block">Suggestion</strong>
+                                                  <ReactMarkdown>{evaluations[i].suggestion}</ReactMarkdown>
+                                                </div>
+                                              )}
+                                              {evaluations[i].bestAnswer && (
+                                                <div className="mt-3 p-2 rounded bg-dark bg-opacity-50 border border-success border-opacity-25">
+                                                  <strong className="text-success small d-block mb-1">Best Answer:</strong>
+                                                  <ReactMarkdown>{evaluations[i].bestAnswer}</ReactMarkdown>
+                                                </div>
+                                              )}
                                             </div>
-                                          )}
-                                          {evaluations[i].bestAnswer && (
-                                            <div style={{marginTop: '1rem', padding: '0.8rem', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '8px', borderLeft: '3px solid #10b981'}}>
-                                              <strong style={{color: '#10b981', display: 'block', marginBottom: '0.5rem'}}>Best Possible Answer:</strong>
-                                              <div style={{fontSize: '0.95rem', color: 'rgba(255, 255, 255, 0.9.5)'}}>
-                                                <ReactMarkdown className="markdown-content">
-                                                  {evaluations[i].bestAnswer}
-                                                </ReactMarkdown>
-                                              </div>
-                                            </div>
-                                          )}
-                                        </div>
-                                      </div>
-                                    )}
+                                          </div>
+                                        )}
+                                    </div>
                                   </div>
                                 )}
-                              </div>
-                            </div>
 
-                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                              <div style={{display: 'flex', gap: '1rem'}}>
-                                <button 
-                                    className="reveal-btn"
-                                    onClick={() => toggleAnswerMode(i)}
-                                >
-                                  {answerMode[i] ? 'Cancel Answer' : '✍️ Write Answer'}
-                                </button>
+                                <div className="d-flex justify-content-between align-items-center mt-3 ps-lg-5">
+                                  <button 
+                                      className={`btn btn-sm ${styles.actionBtn}`}
+                                      onClick={() => toggleAnswerMode(i)}
+                                  >
+                                    {answerMode[i] ? 'Cancel Answer' : '✍️ Write Answer'}
+                                  </button>
+                                  <span className="text-white-50 small fst-italic">
+                                    ~2 min answer
+                                  </span>
+                                </div>
                               </div>
-                              <span 
-                                className="text-white"
-                                style={{
-                                fontSize: '0.85rem',
-                                opacity: 0.6,
-                                fontStyle: 'italic'
-                              }}>
-                                Estimated answer time: 2-3 minutes
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div className="ai-output-placeholder" style={{minHeight: '200px'}}>
-                    <span>💡</span>
-                    <p>Your AI-tailored interview questions will appear here.</p>
-                    <p style={{fontSize: '0.95rem', opacity: 0.6, marginTop: '1rem'}}>
-                      Paste a job description above and generate questions.
-                    </p>
-                </div>
-            )}
-        </div>
+                ) : (
+                    <div className="text-center py-5 text-white-50 opacity-50">
+                        <i className="bi bi-lightbulb display-1 mb-4 d-block"></i>
+                        <h3 className="h5">Your AI-tailored interview questions will appear here.</h3>
+                        <p className="small">Paste a job description above and generate questions.</p>
+                    </div>
+                )}
+            </div>
 
+          </div>
+        </div>
       </div>
     </div>
   );

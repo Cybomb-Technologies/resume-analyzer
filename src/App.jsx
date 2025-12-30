@@ -23,11 +23,15 @@ import Profile from "./pages/profile/Profile";
 import History from "./pages/history/History";
 import CoverLetter from "./pages/ai/CoverLetter";
 import MockInterview from "./pages/ai/MockInterview";
+import JobMatching from "./pages/ai/JobMatching";
+
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop />
         <Navbar />
 
         <Routes>
@@ -52,6 +56,7 @@ export default function App() {
           
           <Route path="/cover-letter" element={<CoverLetter />} />
           <Route path="/mock-interview" element={<MockInterview />} />
+          <Route path="/job-matching" element={<JobMatching />} />
         </Routes>
 
         <Footer />

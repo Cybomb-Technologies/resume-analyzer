@@ -3,6 +3,7 @@ import "./analyse.css";
 import { useNavigate } from "react-router-dom";
 import * as pdfjsLib from "pdfjs-dist";
 import HowItWorks from "../../components/howitworks";
+import StepsShowcase from "../../components/stepshowcase";
 
 /* FIXED PDF WORKER */
 import pdfWorker from "pdfjs-dist/build/pdf.worker.mjs?url";
@@ -142,6 +143,9 @@ export default function Analyse() {
       <div className="analyse-howitworks">
         <HowItWorks />
       </div>
+      
+      {/* Steps Showcase (Moved from Home) */}
+      <StepsShowcase />
 
     </div>
   );

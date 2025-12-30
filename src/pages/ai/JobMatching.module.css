@@ -1,0 +1,31 @@
+.wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding-top: 40px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.jobCard {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 16px;
+  height: 100%;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.jobCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.score {
+  font-weight: 600;
+  color: #198754;
+}

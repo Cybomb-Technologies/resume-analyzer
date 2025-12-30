@@ -36,6 +36,7 @@ export default function AppNavbar() {
                 <Link to="/analyse" className="dropdown-item">Analyse</Link>
                 <Link to="/cover-letter" className="dropdown-item">Cover Letter</Link>
                 <Link to="/mock-interview" className="dropdown-item">Mock Interview</Link>
+                <Link to="/job-matching" className="dropdown-item">Job Matching</Link>
               </div>
             )}
           </div>

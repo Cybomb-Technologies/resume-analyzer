@@ -17,37 +17,63 @@ export default function Feature() {
         {/* Feature Cards */}
         <div className="feature-row">
 
-          {/* ATS Score Card */}
+          {/* AI Resume Analysis */}
           <div className="feature-box">
             <div className="feature-badge">01</div>
-            <i className="bi bi-clipboard-check feature-icon"></i>
-            <h4>ATS Score Card</h4>
+            <i className="bi bi-file-earmark-text feature-icon"></i>
+            <h4>AI Resume Analysis</h4>
             <p>
-              A clear, visual ATS score showing how well your resume performs
-              against automated tracking systems — including formatting, keyword match,
-              and structure.
+              Get an instant score based on ATS algorithms. We verify your formatting, keywords, and job fit in seconds.
             </p>
           </div>
 
-          {/* Skills List */}
+          {/* Cover Letter */}
           <div className="feature-box">
             <div className="feature-badge">02</div>
-            <i className="bi bi-list-ul feature-icon"></i>
-            <h4>Skills List</h4>
+            <i className="bi bi-pencil-square feature-icon"></i>
+            <h4>Smart Cover Letter</h4>
             <p>
-              Extracted skills grouped by categories (technical, tools, soft skills).
-              Easily export or compare with job descriptions.
+              Generate tailored cover letters for any job description. Our AI matches your skills to the company's needs automatically.
             </p>
           </div>
 
-          {/* Suggestion Panel */}
+          {/* Mock Interview */}
           <div className="feature-box">
             <div className="feature-badge">03</div>
-            <i className="bi bi-lightbulb feature-icon"></i>
-            <h4>Suggestion Panel</h4>
+            <i className="bi bi-camera-video feature-icon"></i>
+            <h4>AI Mock Interview</h4>
             <p>
-              AI-powered suggestions to improve your resume — keywords to add,
-              lines to rewrite, and formatting fixes prioritized for you.
+              Practice with a realistic AI interviewer. Get asked role-specific questions and receive instant feedback on your answers.
+            </p>
+          </div>
+
+          {/* Analytics & History */}
+          <div className="feature-box">
+            <div className="feature-badge">04</div>
+            <i className="bi bi-graph-up feature-icon"></i>
+            <h4>Progress Tracking</h4>
+            <p>
+              Keep track of every resume version and interview score. Watch your improve over time with detailed analytics.
+            </p>
+          </div>
+
+          {/* AI Job Matching */}
+          <div className="feature-box">
+            <div className="feature-badge">05</div>
+            <i className="bi bi-briefcase feature-icon"></i>
+            <h4>AI Job Matching</h4>
+            <p>
+              Find the perfect roles for your skillset. Our AI scans thousands of listings to surface jobs you're most likely to land.
+            </p>
+          </div>
+
+          {/* Resume Builder */}
+          <div className="feature-box">
+            <div className="feature-badge">06</div>
+            <i className="bi bi-tools feature-icon"></i>
+            <h4>Resume Builder</h4>
+            <p>
+              Build a professional, ATS-friendly resume from scratch using our drag-and-drop templates and AI content suggestions.
             </p>
           </div>
 
